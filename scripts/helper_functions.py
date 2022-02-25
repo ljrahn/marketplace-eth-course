@@ -1,8 +1,10 @@
-from brownie import network, accounts, config, Contract, interface
-from web3 import Web3
+from brownie import network, accounts, config
+from datetime import datetime
+import os
 
 LOCAL_BLOCKCHAIN_ENVIRONMENTS = ['development', 'ganache-local']
 FORKED_LOCAL_ENVIRONMENTS = ['mainnet-fork', 'mainnet-fork-dev']
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__)).strip('scripts')
 
 
 def get_account(index=None, id=None):
@@ -16,61 +18,19 @@ def get_account(index=None, id=None):
     return accounts.add(config['wallets']['from_key'])
 
 
-# contract_to_mock = {
-#     "eth_usd_price_feed": MockV3Aggregator,
-#     'vrf_coordinator': VRFCoordinatorMock,
-#     'link_token': LinkToken
-# }
+def create_folder_file_now(directory=None, file_name=None, file_type='log'):
+    """Creates a folder and file path in the form /'directory'/month/day/'file_name'.'file_type'
+    :param directory: The directory you wish to stores the folder file path
+    :param file_name: The file name
+    :param file_type: The file extension eg. 'log', 'png' etc.
+    :returns: the full path to the file """
+    if directory is None or file_name is None:
+        raise FileNotFoundError('Directory or filename was not specified')
+    else:
+        now = datetime.now()
+        os.system(
+            f'mkdir -p {os.path.join(ROOT_DIR, directory, now.strftime("%B"), now.strftime("%d"))}')
+        file = os.path.join(ROOT_DIR, directory, now.strftime("%B"), now.strftime("%d"),
+                            f'{file_name}_{now.strftime("%H")}-{now.strftime("%M")}.{file_type}')
 
-
-# def get_contract(contract_name):
-#     """This function will grab contract addresses from the brownie config if defined, otherwise
-#     it will deploy a mock version of that contract, and return that mock contract
-
-#     Args:
-#         contract_name (string)
-
-#     Returns:
-#         brownie.network.contract.ProjectContract: The most recently deployed version of this contract.
-#         MockV3Aggregator[-1]
-#     """
-#     contract_type = contract_to_mock[contract_name]
-#     if network.show_active() in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
-#         if len(contract_type) <= 0:
-#             pass
-#             # deploy_mocks()
-#         contract = contract_type[-1]
-#     else:
-#         contract_address = config['networks'][network.show_active(
-#         )][contract_name]
-#         contract = Contract.from_abi(
-#             contract_type._name, contract_address, contract_type.abi)
-#     return contract
-
-
-DECIMALS = 8
-INITIAL_VALUE = 200000000000
-
-
-# Deploy mocks ex.
-# def deploy_mocks(deciamls=DECIMALS, initial_value=INITIAL_VALUE):
-#     account = get_account()
-#     MockV3Aggregator.deploy(deciamls, initial_value, {'from': account})
-#     link_token = LinkToken.deploy({'from': account})
-#     VRFCoordinatorMock.deploy(link_token.address, {'from': account})
-
-#     print('Mocks deployed!')
-
-
-# Fund a chainlink contract with link in order to perform a future operation
-# def fund_with_link(contract_address, account=None, link_token=None, amount=1 * (10**17)):
-#     account = account if account else get_account()
-#     link_token = link_token if link_token else get_contract('link_token')
-
-#     link_token_contract = interface.LinkTokenInterface(link_token.address)
-#     tx = link_token_contract.transfer(
-#         contract_address, amount, {'from': account})
-
-#     tx.wait(1)
-#     print('Funded Contract!')
-#     return tx
+        return file

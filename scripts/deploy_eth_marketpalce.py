@@ -5,9 +5,9 @@ import time
 
 def deploy_marketplace():
     account = get_account()
-    lottery = CourseMarketplace.deploy(
+    marketplace = CourseMarketplace.deploy(
         {'from': account}, publish_source=config['networks'][network.show_active()].get("verify", False))
-    return
+    return marketplace
 
 
 def main():

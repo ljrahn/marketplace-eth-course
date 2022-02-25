@@ -1,0 +1,60 @@
+{
+  "contracts": {
+    "CourseMarketplace": "db3ab9c0c7a4815250e71561a3a93a4199454174"
+  },
+  "tests": {
+    "tests/unit/test_contract_ownership.py": {
+      "coverage": false,
+      "isolated": false,
+      "results": "...",
+      "sha1": "75662c7947817a44cf332da1c1816aec4c772c97",
+      "txhash": [
+        "7b7bb60d27bf88a9642a5f9404250c5c4cd9312b"
+      ]
+    },
+    "tests/unit/test_contract_purchase.py": {
+      "coverage": false,
+      "isolated": false,
+      "results": ".....",
+      "sha1": "a9f4083c3c81d141c54a4de6b3f97ccd2c343238",
+      "txhash": [
+        "9c2fbfb2f0823a2a00049f19a4f8da86ed0aa1de",
+        "ad018cfc0abfc5ee0ef8d1fefdef5daf82ac35d1"
+      ]
+    }
+  },
+  "tx": {
+    "7b7bb60d27bf88a9642a5f9404250c5c4cd9312b": {
+      "CourseMarketplace": {
+        "0": [
+          [],
+          [],
+          []
+        ]
+      }
+    },
+    "9c2fbfb2f0823a2a00049f19a4f8da86ed0aa1de": {
+      "CourseMarketplace": {
+        "0": [
+          [],
+          [],
+          []
+        ]
+      }
+    },
+    "ad018cfc0abfc5ee0ef8d1fefdef5daf82ac35d1": {
+      "CourseMarketplace": {
+        "0": [
+          [
+            8,
+            9
+          ],
+          [
+            14
+          ],
+          []
+        ]
+      }
+    }
+  }
+}

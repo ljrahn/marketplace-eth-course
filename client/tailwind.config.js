@@ -6,6 +6,14 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  safelist: [
+    {
+      pattern: /bg-/,
+    },
+    {
+      pattern: /text-/,
+    },
+  ],
   theme: {
     screens: {
       xs: "500px",

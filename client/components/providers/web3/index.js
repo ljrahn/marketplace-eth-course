@@ -30,12 +30,8 @@ export default function Web3Provider({ children }) {
 
       if (provider) {
         const web3 = new Web3(provider);
-        let contract;
-        try {
-          contract = await loadContract("CourseMarketplace", web3);
-        } catch (err) {
-          console.error(err);
-        }
+        const contract = await loadContract("CourseMarketplace", web3);
+
         setWeb3Api(
           createWeb3State({
             web3,
@@ -45,7 +41,7 @@ export default function Web3Provider({ children }) {
           })
         );
       } else {
-        setWeb3Api({ ...web3Api, isLoading: false });
+        setWeb3Api((api) => ({ ...api, isLoading: false }));
         console.error("Please install Metamask");
       }
     };

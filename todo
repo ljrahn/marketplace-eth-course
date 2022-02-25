@@ -1,1 +1,5 @@
-1. migrate the build abi to client public folder when smart contract is compiled/deployed
+1. Figure out why some components are rerendering when i dont want them to. For example,
+it looks like im reconnecting to metamask every time (Connect button changes to loading 
+when going between pages)
+SOLUTION: change old solution of exporting a wrapped baselayout to the current solution of defining
+a layout in _app and setting each page to the layout BaseLayout 

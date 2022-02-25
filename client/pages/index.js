@@ -3,7 +3,7 @@ import { CourseCard, CourseList } from "@components/ui/course";
 import { BaseLayout } from "@components/ui/layout";
 import { getAllCourses } from "@content/courses/fetcher";
 
-const Home = ({ courses }) => {
+export default function Home({ courses }) {
   return (
     <>
       <Hero />
@@ -12,7 +12,7 @@ const Home = ({ courses }) => {
       </CourseList>
     </>
   );
-};
+}
 
 export const getStaticProps = () => {
   const { data } = getAllCourses();
@@ -23,10 +23,4 @@ export const getStaticProps = () => {
   };
 };
 
-export default function HomeLayout({ ...props }) {
-  return (
-    <BaseLayout>
-      <Home {...props} />
-    </BaseLayout>
-  );
-}
+Home.Layout = BaseLayout;

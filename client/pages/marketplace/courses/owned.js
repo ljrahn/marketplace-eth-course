@@ -4,9 +4,13 @@ import { OwnedCourseCard } from "@components/ui/course";
 import { BaseLayout } from "@components/ui/layout";
 import { MarketHeader } from "@components/ui/marketplace";
 import { getAllCourses } from "@content/courses/fetcher";
-// import { useEffect } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import { useWeb3 } from "@components/providers";
 
-const OwnedCourses = ({ courses }) => {
+export default function OwnedCourses({ courses }) {
+  const router = useRouter();
+  const { requireInstall } = useWeb3();
   const { account } = useAccount();
   const { ownedCourses } = useOwnedCourses(courses, account.data);
 
@@ -14,16 +18,44 @@ const OwnedCourses = ({ courses }) => {
     <>
       <MarketHeader />
       <section className="grid grid-cols-1">
+        {ownedCourses.isEmpty && (
+          <div className="w-1/2">
+            <Message type="danger">
+              <div> You don't own any courses</div>
+              <Link href="/marketplace">
+                <a className="font-normal hover:underline">
+                  <i> Purchase Course</i>
+                </a>
+              </Link>
+            </Message>
+          </div>
+        )}
+        {account.isEmpty && (
+          <div className="w-1/2">
+            <Message type="warning">
+              <div> Please Connect to Metamask</div>
+            </Message>
+          </div>
+        )}
+        {requireInstall && (
+          <div className="w-1/2">
+            <Message type="danger">
+              <div> Please Install Metamask</div>
+            </Message>
+          </div>
+        )}
         {ownedCourses.data?.map((course) => (
           <OwnedCourseCard key={course.id} course={course}>
             {/* <Message>Purchased!</Message> */}
-            <Button>Watch the course</Button>
+            <Button onClick={() => router.push(`/courses/${course.slug}`)}>
+              Watch the course
+            </Button>
           </OwnedCourseCard>
         ))}
       </section>
     </>
   );
-};
+}
 
 export const getStaticProps = () => {
   const { data } = getAllCourses();
@@ -34,10 +66,4 @@ export const getStaticProps = () => {
   };
 };
 
-export default function OwnedCoursesLayout({ ...props }) {
-  return (
-    <BaseLayout>
-      <OwnedCourses {...props} />
-    </BaseLayout>
-  );
-}
+OwnedCourses.Layout = BaseLayout;

@@ -8,7 +8,7 @@ import { useState } from "react";
 import { MarketHeader } from "@components/ui/marketplace";
 import { useWeb3 } from "@components/providers";
 
-const Marketplace = ({ courses }) => {
+export default function Marketplace({ courses }) {
   const { web3, contract } = useWeb3();
   const { canPurchaseCourse, account } = useWalletInfo();
 
@@ -73,7 +73,7 @@ const Marketplace = ({ courses }) => {
       )}
     </>
   );
-};
+}
 
 export const getStaticProps = () => {
   const { data } = getAllCourses();
@@ -84,10 +84,4 @@ export const getStaticProps = () => {
   };
 };
 
-export default function MarketplaceLayout({ ...props }) {
-  return (
-    <BaseLayout>
-      <Marketplace {...props} />
-    </BaseLayout>
-  );
-}
+Marketplace.Layout = BaseLayout;

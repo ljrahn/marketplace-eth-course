@@ -7,3 +7,4 @@ export { default as Button } from "./button";
 export { default as ActiveLink } from "./link";
 export { default as Loader } from "./loader";
 export { default as Message } from "./message";
+export { default as ContractAddress } from "./contract_address";
